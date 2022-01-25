@@ -19,7 +19,7 @@ int main() {
 	GaussianBlur(gray, gray, Size(5, 5), 0);
 	Mat canny;
 	Canny(gray, canny, 150, 10);
-	imshow("Canny", canny);
+	//imshow("Canny", canny);
 
 	// 2. Find Contours
 	vector<vector<Point>> contours;
@@ -41,10 +41,18 @@ int main() {
 		imshow("Img", img);
 	}
 
+	cout << square[0] << endl;
+	cout << square[0].x << endl;
+	cout << square[0].y << endl;
+	cout << square[1] << endl;
+	cout << square[2] << endl;
+	cout << square[3] << endl;
+
 	// 4. Warping - Size Fixed
-	Size warp_size(400, 400);
+	Size warp_size(877, 620);
 	Mat warp_img(warp_size, img.type());
 	vector<Point2f> warp_square(4);
+
 
 	warp_square[0] = Point(warp_img.cols, 0);
 	warp_square[1] = Point(warp_img.cols, warp_img.rows);
