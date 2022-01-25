@@ -36,8 +36,6 @@ int main() {
 		approxPolyDP(contours[i], conpoly[i], 1.95, true);
 		if (conpoly[i].size() == 4) {
 			drawContours(img, conpoly, i, Scalar(255 , 0 , 255), 2);
-			//cout << "Contour #" << i << ": r.vertices=" << contours[i].size() << ", n.vertices=" << conpoly[i].size() << endl;
-			//cout << "start point of Contour" << conpoly[i] << endl;
 			copy(conpoly[i].begin(), conpoly[i].end(), back_inserter(square));
 		}
 		imshow("Img", img);
