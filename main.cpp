@@ -1,3 +1,4 @@
+//20201514 HyunSoo Lee
 #include <opencv2/opencv.hpp>
 #include <algorithm>
 #include <iostream>
@@ -10,7 +11,7 @@ using namespace std;
 
 int main() {
 
-	// 1. 이미지 받아와서 그레이 스케일로 변환 후 캐니 에지 디텍팅
+	// 1. Load image, Gray Scaling, Canny edge detection, Gaussian Blur
 	Mat img = imread("hello.jpg");
 	Mat gray;
 	resize(img, img, Size((img.size().width) / 1.5, (img.size().height) / 1.5));
@@ -20,14 +21,13 @@ int main() {
 	Canny(gray, canny, 150, 10);
 	imshow("Canny", canny);
 
-	// 2. 컨투어 찾기
+	// 2. Find Contours
 	vector<vector<Point>> contours;
-	//contours 벡터 내에는 컨투어를 구성하는 점의 좌표들이 있다
-	//2차원 배열이기 때문에, 컨투어의 갯수 - 해당 컨투어 구성 점들의 좌표 순
+	//2 dimension array, number of Contours - location of The Contour
 	vector<Vec4i> hierarchy;
 	findContours(canny, contours, hierarchy, RETR_CCOMP, CHAIN_APPROX_TC89_L1);
 
-	// 3. 컨투어 그리기
+	// 3. Draw Contour
 	vector<vector<Point>> conpoly(contours.size());
 	vector<Point2f> square;
 	for (int i = 0; i < contours.size(); i++) {
@@ -41,7 +41,7 @@ int main() {
 		imshow("Img", img);
 	}
 
-	// 4. 컨투어 펼치기
+	// 4. Warping - Size Fixed
 	Size warp_size(400, 400);
 	Mat warp_img(warp_size, img.type());
 	vector<Point2f> warp_square(4);
