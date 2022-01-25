@@ -9,6 +9,8 @@
 using namespace cv;
 using namespace std;
 
+double  pythagoras(int  x1, int y1, int  x2, int y2);
+
 int main() {
 
 	// 1. Load image, Gray Scaling, Canny edge detection, Gaussian Blur
@@ -41,18 +43,13 @@ int main() {
 		imshow("Img", img);
 	}
 
-	cout << square[0] << endl;
-	cout << square[0].x << endl;
-	cout << square[0].y << endl;
-	cout << square[1] << endl;
-	cout << square[2] << endl;
-	cout << square[3] << endl;
+	// 4. Warping (Size : Using pythagoras)
+	double width = pythagoras((int)square[0].x, (int)square[0].y, (int)square[3].x, (int)square[3].y);
+	double height = pythagoras((int)square[0].x, (int)square[0].y, (int)square[1].x, (int)square[1].y);
 
-	// 4. Warping - Size Fixed
-	Size warp_size(877, 620);
+	Size warp_size((int) width, (int) height);
 	Mat warp_img(warp_size, img.type());
 	vector<Point2f> warp_square(4);
-
 
 	warp_square[0] = Point(warp_img.cols, 0);
 	warp_square[1] = Point(warp_img.cols, warp_img.rows);
@@ -65,4 +62,17 @@ int main() {
 
 	waitKey();
 	return 0;
+}
+
+double  pythagoras(int  x1, int y1, int  x2, int y2) {
+	int a, b = 0;
+	if (x1 < x2)
+		a = (x2 - x1) ^ 2;
+	else
+		a = (x1 - x2) ^ 2;
+	if (y1 < y2)
+		b = (y2 - y1) ^ 2;
+	else
+		b = (y1 - y2) ^ 2;
+	return (a + b) ^ 1/2;
 }
