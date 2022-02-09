@@ -5,9 +5,12 @@
 #include <stdio.h>
 #include <windows.h>
 #include <vector>
+#include <tesseract/baseapi.h>
+#include <leptonica/allheaders.h>
 
 using namespace cv;
 using namespace std;
+using namespace tesseract;
 
 double  pythagoras(int  x1, int y1, int  x2, int y2);
 
@@ -57,9 +60,33 @@ int main() {
 	Mat trans = getPerspectiveTransform(square, warp_square);
 	warpPerspective(img, warp_img, trans, warp_size);
 	imshow("warping", warp_img);
-
+	imwrite("warp_img.jpg", warp_img);
 	waitKey();
 	return 0;
+
+	char* outText;
+	TessBaseAPI* api = new TessBaseAPI();
+	if (api->Init(NULL, "eng")) {
+		fprintf(stderr, "Could not initialize tesseract.\n");
+		exit(1);
+	}
+
+	// 5. Open input image with leptonica library
+	Pix* image = pixRead("/usr/src/tesseract/testing/phototest.tif");
+	api->SetImage(image);
+
+	// 6. Get OCR result
+	outText = api->GetUTF8Text();
+	printf("OCR output:\n%s", outText);
+
+	// 7. Destroy used object and release memory
+	api->End();
+	delete api;
+	delete[] outText;
+	pixDestroy(&image);
+
+	return 0;
+
 }
 
 double  pythagoras(int  x1, int y1, int  x2, int y2) {
