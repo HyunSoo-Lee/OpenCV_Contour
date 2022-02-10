@@ -2,7 +2,6 @@
 #include <opencv2/opencv.hpp>
 #include <algorithm>
 #include <iostream>
-#include <stdio.h>
 #include <windows.h>
 #include <vector>
 #include <tesseract/baseapi.h>
@@ -61,8 +60,6 @@ int main() {
 	warpPerspective(img, warp_img, trans, warp_size);
 	imshow("warping", warp_img);
 	imwrite("warp_img.jpg", warp_img);
-	waitKey();
-	return 0;
 
 	char* outText;
 	TessBaseAPI* api = new TessBaseAPI();
@@ -72,7 +69,8 @@ int main() {
 	}
 
 	// 5. Open input image with leptonica library
-	Pix* image = pixRead("/usr/src/tesseract/testing/phototest.tif");
+	Pix* image = pixRead("warp_img.jpg");
+	//Pix*image = pixRead("download.png");
 	api->SetImage(image);
 
 	// 6. Get OCR result
@@ -82,9 +80,10 @@ int main() {
 	// 7. Destroy used object and release memory
 	api->End();
 	delete api;
-	delete[] outText;
+	delete[] outText;	
 	pixDestroy(&image);
-
+	
+	waitKey();
 	return 0;
 
 }
