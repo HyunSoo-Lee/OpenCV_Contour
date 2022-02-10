@@ -59,6 +59,8 @@ int main() {
 	Mat trans = getPerspectiveTransform(square, warp_square);
 	warpPerspective(img, warp_img, trans, warp_size);
 	imshow("warping", warp_img);
+	cvtColor(warp_img, warp_img, COLOR_BGR2GRAY);
+	GaussianBlur(warp_img, warp_img, Size(3, 3), 0);
 	imwrite("warp_img.jpg", warp_img);
 
 	char* outText;
