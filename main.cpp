@@ -50,7 +50,7 @@ int main() {
 	warp_square[0] = Point(warp_img.cols, 0);
 	warp_square[1] = Point(warp_img.cols, warp_img.rows);
 	warp_square[2] = Point(0, warp_img.rows);
-	warp_square[3] = Point(0, 0);	
+	warp_square[3] = Point(0, 0);
 
 	Mat trans = getPerspectiveTransform(square, warp_square);
 	warpPerspective(img, warp_img, trans, warp_size);
@@ -84,10 +84,10 @@ int main() {
 	
 	waitKey();
 	return 0;
-
 }
 
 Mat imgRefine(Mat img, int gaussian, int canny1, int canny2) {
+	// Gray scaling -> binary threshold -> canny edge detection (if need)
 	Mat gray;
 	Mat result;
 	cvtColor(img, gray, COLOR_BGR2GRAY);
