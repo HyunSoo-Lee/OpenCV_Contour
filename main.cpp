@@ -11,7 +11,7 @@ using namespace cv;
 using namespace std;
 using namespace tesseract;
 
-Mat imgRefine(Mat img, int gaussian, int canny1, int canny2);
+Mat imgRefine(Mat img, int gaussian = 0, int canny1 = 0, int canny2 = 0);
 double  pythagoras(int  x1, int y1, int  x2, int y2);
 
 int main() {
@@ -55,7 +55,9 @@ int main() {
 	Mat trans = getPerspectiveTransform(square, warp_square);
 	warpPerspective(img, warp_img, trans, warp_size);
 	imshow("warping", warp_img);
-	warp_img = imgRefine(warp_img, 3, 150, 10);
+	warp_img = imgRefine(warp_img, 5);
+	resize(warp_img, warp_img, Size((warp_img.size().width) / 2, (warp_img.size().height) / 2));
+	//imshow("warping", warp_img);
 	imwrite("warp_img.jpg", warp_img);
 
 	char* outText;
@@ -66,7 +68,7 @@ int main() {
 	}
 
 	// 5. Open input image with leptonica library
-	Pix* image = pixRead("download.png");
+	Pix* image = pixRead("warp_img.jpg");
 	//Pix*image = pixRead("download.png");
 	api->SetImage(image);
 
@@ -89,8 +91,16 @@ Mat imgRefine(Mat img, int gaussian, int canny1, int canny2) {
 	Mat gray;
 	Mat result;
 	cvtColor(img, gray, COLOR_BGR2GRAY);
-	GaussianBlur(gray, gray, Size(gaussian, gaussian), 0);
-	Canny(gray, result, canny1, canny2);
+	if (gaussian > 0) {
+		GaussianBlur(gray, gray, Size(gaussian, gaussian), 0);
+	}
+	if (canny1 > 0 && canny2 > 0) {
+		Canny(gray, result, canny1, canny2);
+	}
+	else {
+		result = gray;
+	}
+	threshold(result, result, 125, 255, THRESH_OTSU);
 	return result;
 }
 
