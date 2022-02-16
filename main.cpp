@@ -94,13 +94,10 @@ Mat imgRefine(Mat img, int gaussian, int canny1, int canny2) {
 	if (gaussian > 0) {
 		GaussianBlur(gray, gray, Size(gaussian, gaussian), 0);
 	}
+	threshold(gray, result, 125, 255, THRESH_OTSU);
 	if (canny1 > 0 && canny2 > 0) {
 		Canny(gray, result, canny1, canny2);
 	}
-	else {
-		result = gray;
-	}
-	threshold(result, result, 125, 255, THRESH_OTSU);
 	return result;
 }
 
