@@ -91,7 +91,6 @@ Mat imgRefine(Mat img, int gaussian, int canny1, int canny2) {
 	Mat gray;
 	Mat result;
 	cvtColor(img, gray, COLOR_BGR2GRAY);
-	imshow("gray scaling", gray);
 	if (gaussian > 0) {
 		GaussianBlur(gray, gray, Size(gaussian, gaussian), 0);
 	}
