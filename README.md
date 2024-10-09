@@ -3,3 +3,4 @@
 ![introduction_page-0003](https://github.com/user-attachments/assets/09671f03-f3ba-419f-85fd-5bdd7a4d5dd2)
 ![introduction_page-0004](https://github.com/user-attachments/assets/ded91a95-e464-4189-b237-d6dda4ecda1c)
 ![introduction_page-0005](https://github.com/user-attachments/assets/e83ad736-7d25-4fc0-b7f8-54f24f881115)
+![image](https://github.com/user-attachments/assets/b0744922-9a91-4015-99aa-3389a43b0800)
